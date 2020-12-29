@@ -18,7 +18,7 @@ import java.util.List;
  * @since 2020-12-23
  */
 @RestController
-@RequestMapping("/main/customer")
+@RequestMapping("/customer")
 public class CustomerController {
     @Autowired
     ICustomerService service;
@@ -35,6 +35,5 @@ public class CustomerController {
         ResponseEntity<List<Customer>> ok = ResponseEntity.ok(customerList);
         return ok;
     }
-
 
 }
