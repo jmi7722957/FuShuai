@@ -29,7 +29,7 @@ public class CustomerController {
         return "GG思密达";
     }
 
-    @GetMapping("/listCustomer")
+    @GetMapping("/list")
     public ResponseEntity listCustomer(){
         List<Customer> customerList = service.list();
         ResponseEntity<List<Customer>> ok = ResponseEntity.ok(customerList);
