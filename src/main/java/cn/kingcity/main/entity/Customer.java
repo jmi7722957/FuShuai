@@ -5,6 +5,10 @@ import java.util.Date;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * <p>
@@ -14,6 +18,7 @@ import lombok.EqualsAndHashCode;
  * @author Jason
  * @since 2020-12-23
  */
+@Component
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class Customer implements Serializable {

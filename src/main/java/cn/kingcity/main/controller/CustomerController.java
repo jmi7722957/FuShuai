@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -22,6 +25,8 @@ import java.util.List;
 public class CustomerController {
     @Autowired
     ICustomerService service;
+    @Autowired
+    Customer customer;
 
     @GetMapping("/test")
     public String test(){
@@ -34,6 +39,19 @@ public class CustomerController {
         List<Customer> customerList = service.list();
         ResponseEntity<List<Customer>> ok = ResponseEntity.ok(customerList);
         return ok;
+    }
+
+    @PostMapping("/add")
+    public boolean addCustomer(@RequestBody Map map){
+        customer.setName(map.get("p_name").toString());
+        customer.setSex(map.get("p_sex").toString());
+        customer.setAddress(map.get("p_address").toString());
+        customer.setIntroducer(map.get("p_introducer").toString());
+        customer.setPhone(Integer.parseInt(map.get("p_phone").toString()));
+        customer.setCreate_person(map.get("p_create_person").toString());
+        customer.setCreate_time(new Date());
+        boolean savaFlag = service.save(customer);
+        return savaFlag;
     }
 
 }
