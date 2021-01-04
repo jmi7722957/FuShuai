@@ -9,9 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -65,22 +63,36 @@ public class CustomerController {
     public boolean editCustomer(@RequestBody Map map){
         boolean editFlag = false;
         try {
-            //int cusid=Integer.parseInt(map.get("p_id").toString());
-            customer.setId(Integer.parseInt(map.get("p_phone").toString()));
+            int cusid=Integer.parseInt(map.get("p_id").toString());
+            //customer.setId(Integer.parseInt(map.get("p_id").toString()));
             customer.setName(map.get("p_name").toString());
             customer.setSex(map.get("p_sex").toString());
             customer.setAddress(map.get("p_address").toString());
             customer.setIntroducer(map.get("p_introducer").toString());
             customer.setPhone(Integer.parseInt(map.get("p_phone").toString()));
             UpdateWrapper wrapper=new UpdateWrapper();
-            wrapper.eq("id");
-            editFlag = service.update(customer, wrapper);
-            System.out.println(editFlag);
+            wrapper.eq("id",cusid);
+            editFlag = service.update(customer,wrapper);
+            //editFlag = service.updateById(customer);
         } catch (NumberFormatException e) {
             e.printStackTrace();
             return false;
         }
         return editFlag;
+    }
+
+    @PostMapping("/delete")
+    public boolean deleteCus(@RequestBody Map map){
+        boolean flag = false;
+        try {
+            List list =new ArrayList();
+            list= (List) map.get("p_del_list");
+            flag = service.removeByIds(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return flag;
     }
 
 }
