@@ -3,6 +3,7 @@ package cn.kingcity.main.controller;
 
 import cn.kingcity.main.entity.Customer;
 import cn.kingcity.main.service.ICustomerService;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,15 +44,43 @@ public class CustomerController {
 
     @PostMapping("/add")
     public boolean addCustomer(@RequestBody Map map){
-        customer.setName(map.get("p_name").toString());
-        customer.setSex(map.get("p_sex").toString());
-        customer.setAddress(map.get("p_address").toString());
-        customer.setIntroducer(map.get("p_introducer").toString());
-        customer.setPhone(Integer.parseInt(map.get("p_phone").toString()));
-        customer.setCreate_person(map.get("p_create_person").toString());
-        customer.setCreate_time(new Date());
-        boolean savaFlag = service.save(customer);
+        boolean savaFlag = false;
+        try {
+            customer.setName(map.get("p_name").toString());
+            customer.setSex(map.get("p_sex").toString());
+            customer.setAddress(map.get("p_address").toString());
+            customer.setIntroducer(map.get("p_introducer").toString());
+            customer.setPhone(Integer.parseInt(map.get("p_phone").toString()));
+            customer.setCreate_person(map.get("p_create_person").toString());
+            customer.setCreate_time(new Date());
+            savaFlag = service.save(customer);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return false;
+        }
         return savaFlag;
+    }
+
+    @PostMapping("/edit")
+    public boolean editCustomer(@RequestBody Map map){
+        boolean editFlag = false;
+        try {
+            //int cusid=Integer.parseInt(map.get("p_id").toString());
+            customer.setId(Integer.parseInt(map.get("p_phone").toString()));
+            customer.setName(map.get("p_name").toString());
+            customer.setSex(map.get("p_sex").toString());
+            customer.setAddress(map.get("p_address").toString());
+            customer.setIntroducer(map.get("p_introducer").toString());
+            customer.setPhone(Integer.parseInt(map.get("p_phone").toString()));
+            UpdateWrapper wrapper=new UpdateWrapper();
+            wrapper.eq("id");
+            editFlag = service.update(customer, wrapper);
+            System.out.println(editFlag);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return editFlag;
     }
 
 }
