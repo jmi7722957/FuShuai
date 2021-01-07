@@ -27,7 +27,7 @@ public class CustomerController {
     ICustomerService service;
     @Resource
     CustomerMapper mapper;
-    @Autowired
+    @Resource
     Customer customer;
 
     @GetMapping("/test")
@@ -53,6 +53,7 @@ public class CustomerController {
     public boolean addCustomer(@RequestBody Map map){
         boolean savaFlag = false;
         try {
+
             customer.setName(map.get("p_name").toString());
             customer.setSex(map.get("p_sex").toString());
             customer.setAddress(map.get("p_address").toString());
@@ -60,6 +61,7 @@ public class CustomerController {
             customer.setPhone(Integer.parseInt(map.get("p_phone").toString()));
             customer.setCreate_person(map.get("p_create_person").toString());
             customer.setCreate_time(new Date());
+
             savaFlag = service.save(customer);
         } catch (NumberFormatException e) {
             e.printStackTrace();
