@@ -2,6 +2,7 @@ package cn.kingcity.main.controller;
 
 
 import cn.kingcity.main.entity.Customer;
+import cn.kingcity.main.mapper.CustomerMapper;
 import cn.kingcity.main.service.ICustomerService;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ import java.util.*;
 public class CustomerController {
     @Autowired
     ICustomerService service;
+    @Resource
+    CustomerMapper mapper;
     @Autowired
     Customer customer;
 
@@ -37,6 +40,12 @@ public class CustomerController {
     public ResponseEntity listCustomer(){
         List<Customer> customerList = service.list();
         ResponseEntity<List<Customer>> ok = ResponseEntity.ok(customerList);
+        return ok;
+    }
+    @GetMapping("/addressEcharts")
+    public ResponseEntity addressEcharts(){
+        List li=mapper.addressCharts();
+        ResponseEntity<Object> ok = ResponseEntity.ok(li);
         return ok;
     }
 

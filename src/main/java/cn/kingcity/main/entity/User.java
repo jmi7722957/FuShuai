@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Jason
@@ -17,6 +17,8 @@ import lombok.EqualsAndHashCode;
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    private Integer ID;
 
     private String username;
 

@@ -7,7 +7,11 @@ spring:
   devtools:
     restart:
       enabled: true  #设置开启热部署
-      additional-paths: src/main/java #重启目录
+      additional-paths: src/main/java/cn/kingcity/main #重启目录
       exclude: WEB-INF/**
 server:
   port: 8081
+mybatis-plus:
+  #mapper-locations: classpath:/mapper/main/*Mapper.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
