@@ -66,7 +66,7 @@ public class CustomerController {
             customer.setCreate_time(new Date());
 
             savaFlag = service.save(customer);
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
