@@ -39,7 +39,7 @@ public class Customer implements Serializable {
 
     private String address;
 
-    private Integer phone;
+    private Long phone;
 
     private String introducer;
 

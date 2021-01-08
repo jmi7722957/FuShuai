@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.math.BigInteger;
 import java.util.*;
 
 /**
@@ -53,12 +54,14 @@ public class CustomerController {
     public boolean addCustomer(@RequestBody Map map){
         boolean savaFlag = false;
         try {
-
+            //parseInt(ph)最长支持10位
             customer.setName(map.get("p_name").toString());
             customer.setSex(map.get("p_sex").toString());
             customer.setAddress(map.get("p_address").toString());
             customer.setIntroducer(map.get("p_introducer").toString());
-            customer.setPhone(Integer.parseInt(map.get("p_phone").toString()));
+            String ph=map.get("p_phone").toString();
+            Long ph2=Long.parseLong(ph);
+            customer.setPhone(ph2);
             customer.setCreate_person(map.get("p_create_person").toString());
             customer.setCreate_time(new Date());
 
@@ -80,7 +83,7 @@ public class CustomerController {
             customer.setSex(map.get("p_sex").toString());
             customer.setAddress(map.get("p_address").toString());
             customer.setIntroducer(map.get("p_introducer").toString());
-            customer.setPhone(Integer.parseInt(map.get("p_phone").toString()));
+            customer.setPhone(Long.parseLong(map.get("p_phone").toString()));
             UpdateWrapper wrapper=new UpdateWrapper();
             wrapper.eq("id",cusid);
             editFlag = service.update(customer,wrapper);
