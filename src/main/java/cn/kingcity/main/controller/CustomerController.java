@@ -109,4 +109,13 @@ public class CustomerController {
         return flag;
     }
 
+    @RequestMapping("/uploadExcel")
+    public ResponseEntity upload(String[] excelArr,String excelData,Long onBankId) {
+        System.out.println(excelArr.toString());
+        System.out.println(excelData.toString());
+        System.out.println(onBankId.toString());
+        ResponseEntity<Object> ok = ResponseEntity.ok(true);
+        return null;
+    }
+
 }
