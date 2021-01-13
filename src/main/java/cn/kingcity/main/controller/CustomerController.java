@@ -110,12 +110,22 @@ public class CustomerController {
     }
 
     @RequestMapping("/uploadExcel")
-    public ResponseEntity upload(String[] excelArr,String excelData,Long onBankId) {
-        System.out.println(excelArr.toString());
-        System.out.println(excelData.toString());
-        System.out.println(onBankId.toString());
-        ResponseEntity<Object> ok = ResponseEntity.ok(true);
-        return null;
+    public boolean upload(@RequestBody Map map) {
+        System.out.println(map);
+        Map dataMap= (Map) map.get("p_data");
+        //以防万一空了个值，统一进一
+        Double n= Double.valueOf(dataMap.size());
+        int h= (int) Math.ceil(n/5);
+        List<Customer> cusList=new ArrayList<Customer>();
+        for(int s=2;s<=h;s++){
+            customer.setName(dataMap.get("A"+s).toString());
+            customer.setSex(dataMap.get("B"+s).toString());
+            customer.setAddress(dataMap.get("C"+s).toString());
+            customer.setPhone(Long.parseLong(dataMap.get("D"+s).toString()));
+            customer.setIntroducer(dataMap.get("E"+s).toString());
+            cusList.add(customer);
+        }
+        return service.saveBatch(cusList);
     }
 
 }
