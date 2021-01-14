@@ -118,12 +118,13 @@ public class CustomerController {
         int h= (int) Math.ceil(n/5);
         List<Customer> cusList=new ArrayList<Customer>();
         for(int s=2;s<=h;s++){
-            customer.setName(dataMap.get("A"+s).toString());
-            customer.setSex(dataMap.get("B"+s).toString());
-            customer.setAddress(dataMap.get("C"+s).toString());
-            customer.setPhone(Long.parseLong(dataMap.get("D"+s).toString()));
-            customer.setIntroducer(dataMap.get("E"+s).toString());
-            cusList.add(customer);
+            Customer cu=new Customer();
+            cu.setName(dataMap.get("A"+s).toString());
+            cu.setSex(dataMap.get("B"+s).toString());
+            cu.setAddress(dataMap.get("C"+s).toString());
+            cu.setPhone(Long.parseLong(dataMap.get("D"+s).toString()));
+            cu.setIntroducer(dataMap.get("E"+s).toString());
+            cusList.add(cu);
         }
         return service.saveBatch(cusList);
     }
