@@ -7,7 +7,7 @@ spring:
   devtools:
     restart:
       enabled: true  #设置开启热部署
-      additional-paths: src/main/java/cn/kingcity/main #重启目录
+      additional-paths: src/main/java/cn/kingcity/ #重启目录
       exclude: WEB-INF/**
 server:
   port: 8081

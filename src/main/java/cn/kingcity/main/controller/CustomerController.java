@@ -24,7 +24,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
-    @Autowired
+    @Resource
     ICustomerService service;
     @Resource
     CustomerMapper mapper;
@@ -60,8 +60,10 @@ public class CustomerController {
             customer.setAddress(map.get("p_address").toString());
             customer.setIntroducer(map.get("p_introducer").toString());
             String ph=map.get("p_phone").toString();
-            Long ph2=Long.parseLong(ph);
-            customer.setPhone(ph2);
+            if (ph!="") {
+                Long ph2=Long.parseLong(ph);
+                customer.setPhone(ph2);
+            }
             customer.setCreate_person(map.get("p_create_person").toString());
             customer.setCreate_time(new Date());
 
