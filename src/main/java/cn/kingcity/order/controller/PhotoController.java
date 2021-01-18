@@ -1,9 +1,18 @@
 package cn.kingcity.order.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import cn.kingcity.order.entity.Photo;
+import cn.kingcity.order.service.IPhotoService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import javax.annotation.Resource;
+import java.io.*;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -14,7 +23,92 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-01-15
  */
 @RestController
-@RequestMapping("/order/photo")
+@RequestMapping("/photo")
 public class PhotoController {
 
+    @Resource
+    IPhotoService service;
+    @Resource
+    Photo photo;
+
+    //最正统的request传参,- -好麻烦，还是axios比较好，还可以js先解析完
+    //MultipartHttpServletRequest是Request的子类，刚好合适
+    @PostMapping("/uploadPhoto/{orderId}")
+    public boolean uploadPhoto(MultipartHttpServletRequest multiRequest, @PathVariable String orderId){
+        OutputStream os = null;
+        InputStream inputStream = null;
+        String fileName = null;
+        String writePath="";//要写入的文件夹url
+        int intOrderId;
+
+        try {
+            Map<String, MultipartFile> fileMap = multiRequest.getFileMap();
+            MultipartFile file=fileMap.get("file");
+            inputStream = file.getInputStream();
+            fileName = file.getOriginalFilename();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            String path = "D:\\workspace\\FuShuai_Vue\\static\\image\\";
+            // 2、保存到临时文件
+            // 1K的数据缓冲
+            byte[] bs = new byte[1024];
+            // 读取到的数据长度
+            int len;
+            // 输出的文件流保存到本地文件
+            File tempFile = new File(path);
+            if (!tempFile.exists()) {
+                //不存在此目录则创建
+                tempFile.mkdirs();
+            }
+            //File.separator智能分隔符/多平台的
+            writePath=tempFile.getPath() + File.separator + fileName;
+            os = new FileOutputStream(writePath);
+            // 每次写1m直到写完
+            //从临时读到m内存里面，顺便还跟len做个判断，比较精妙
+            while ((len = inputStream.read(bs)) != -1) {
+                //写入len长度，每次写bs单位，直到0停止
+                os.write(bs, 0, len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            // 完毕，关闭所有链接
+            try {
+                os.close();
+                inputStream.close();
+
+                //下面开始把图片标记到数据库
+                boolean saveFlag=false;
+                if(orderId!=null){
+                    intOrderId=Integer.parseInt(orderId);
+                    photo.setOrderId(intOrderId);
+                    photo.setName(fileName);
+                    photo.setUrl(writePath);
+                    saveFlag=service.save(photo);
+                }
+
+                if (saveFlag==true){
+                    return true;
+                }else {
+                    return false;
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    @PostMapping("/showPhoto")
+    public List showPhoto(@RequestBody Map map){
+        boolean delFlag=false;
+        int orderId=Integer.parseInt(map.get("p_orderId").toString());
+        QueryWrapper wrapper=new QueryWrapper();
+        wrapper.eq("order_id",orderId);
+        List list=service.list(wrapper);
+        return list;
+    }
 }
