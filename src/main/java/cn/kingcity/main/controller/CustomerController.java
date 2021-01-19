@@ -34,7 +34,7 @@ public class CustomerController {
     @GetMapping("/test")
     public String test(){
         System.out.println("去虐企斩蔗");
-        return "GG思密达";
+        return "11思密达";
     }
 
     @GetMapping("/list")

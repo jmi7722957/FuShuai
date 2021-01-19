@@ -1,24 +1,15 @@
 package cn.kingcity.order.controller;
 
 
-import cn.kingcity.main.entity.Customer;
 import cn.kingcity.order.entity.OrderTable;
-import cn.kingcity.order.entity.Photo;
 import cn.kingcity.order.service.IOrderService;
-import cn.kingcity.order.service.IPhotoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>

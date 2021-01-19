@@ -40,7 +40,7 @@ public class PhotoController {
         String fileName = null;
         String writePath="";//要写入的文件夹url
         int intOrderId;
-
+        //先把图片放到文件夹
         try {
             Map<String, MultipartFile> fileMap = multiRequest.getFileMap();
             MultipartFile file=fileMap.get("file");
@@ -51,6 +51,13 @@ public class PhotoController {
         }
         try {
             String path = "D:\\workspace\\FuShuai_Vue\\static\\image\\";
+            //先来验证下文件是否存在
+            File fileBean=new File(path+fileName);
+            if (fileBean.exists())
+            {
+                return false;
+            }
+
             // 2、保存到临时文件
             // 1K的数据缓冲
             byte[] bs = new byte[1024];
@@ -110,5 +117,27 @@ public class PhotoController {
         wrapper.eq("order_id",orderId);
         List list=service.list(wrapper);
         return list;
+    }
+
+    @PostMapping("/del")
+    public boolean delPhoto(@RequestBody Map map){
+        boolean delFlag=false;
+        try {
+            //从文件夹删除文件
+            String url=map.get("p_photo_url").toString();
+            File file=new File(url);
+            if(file.exists()){
+                file.delete();
+            }else {
+                return delFlag;
+            }
+            //从表中删除
+            int photo_id=Integer.parseInt(map.get("p_photo_id").toString());
+            delFlag=service.removeById(photo_id);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return delFlag;
+        }
+        return delFlag;
     }
 }
