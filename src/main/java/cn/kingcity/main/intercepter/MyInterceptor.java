@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 public class MyInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse response, Object o) throws Exception {
-        System.out.println("preHandle被调用");
+        System.out.println("preHandle跨域拦截器被调用");
         response.setHeader("Access-Control-Allow-Origin", "*");//设置允许哪些域名应用进行ajax访问
         response.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type");
