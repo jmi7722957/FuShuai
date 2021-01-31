@@ -37,6 +37,8 @@ public class PhotoController {
     public boolean uploadPhoto(MultipartHttpServletRequest multiRequest, @PathVariable String orderId){
         OutputStream os = null;
         InputStream inputStream = null;
+        boolean isExist=false;//检测文件是否存在的标记
+        boolean saveFlag=false;//是否成功保存
         String fileName = null;
         String writePath="";//要写入的文件夹url
         int intOrderId;
@@ -50,11 +52,14 @@ public class PhotoController {
             e.printStackTrace();
         }
         try {
-            String path = "/www/vueDemo/static/image";
-            //先来验证下文件是否存在
+            //String path = "/www/vueDemo/static/image";
+            String path = "D:\\workspace\\FuShuai_Vue\\static\\image\\";
+
+        //先来验证下文件是否存在
             File fileBean=new File(path+fileName);
             if (fileBean.exists())
             {
+                isExist=true;
                 return false;
             }
 
@@ -83,39 +88,47 @@ public class PhotoController {
         } finally {
             // 完毕，关闭所有链接
             try {
-                os.close();
-                inputStream.close();
-
+                //都跳出了，没有调用io所以不用关闭
+                if (!isExist) {
+                    os.close();
+                    inputStream.close();
+                }
                 //下面开始把图片标记到数据库
-                boolean saveFlag=false;
-                if(orderId!=null){
+
+                if(orderId!=null&&!isExist){
                     intOrderId=Integer.parseInt(orderId);
                     photo.setOrderId(intOrderId);
                     photo.setName(fileName);
                     photo.setUrl(writePath);
                     saveFlag=service.save(photo);
                 }
-
                 if (saveFlag==true){
-                    return true;
+
+                    saveFlag=true;
                 }else {
-                    return false;
+                    saveFlag=false;
                 }
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return false;
+        return saveFlag;
     }
 
     @PostMapping("/showPhoto")
     public List showPhoto(@RequestBody Map map){
         boolean delFlag=false;
-        int orderId=Integer.parseInt(map.get("p_orderId").toString());
+        List list=null;
+        int orderId=0;
+        if (map.size()!=0) {
+            orderId=Integer.parseInt(map.get("p_orderId").toString());
+        }else {
+            return null;
+        }
         QueryWrapper wrapper=new QueryWrapper();
         wrapper.eq("order_id",orderId);
-        List list=service.list(wrapper);
+        list=service.list(wrapper);
         return list;
     }
 

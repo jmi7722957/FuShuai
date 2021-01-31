@@ -1,7 +1,7 @@
 spring:
   datasource:
-    username: jason
-    password: 21019581
+    username: root
+    password: 123456
     url: jdbc:mysql://localhost:3306/fushuai?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
   #设置开启热部署（已关闭）

@@ -42,14 +42,11 @@ public class OrderController {
         boolean saveFlag = false;
         try {
             //parseInt(ph)最长支持10位
-            order.setCustomerId(Integer.parseInt(map.get("p_customer_id").toString()));
-            order.setOrderAddress(map.get("p_order_address").toString());
+            order.setCustomerId(Integer.parseInt(map.get("p_customerId").toString()));
+            order.setOrderAddress(map.get("p_orderAddress").toString());
             order.setDeposit(Double.parseDouble(map.get("p_deposit").toString()));
-            order.setTotalMoney(Double.parseDouble(map.get("p_total_money").toString()));
-            order.setReturnMoney(Double.parseDouble(map.get("p_return_money").toString()));
-            order.setEndMoney(Double.parseDouble(map.get("p_end_money").toString()));
             order.setRemarks(map.get("p_remarks").toString());
-            order.setCreatePerson(map.get("p_create_person").toString());
+            order.setCreatePerson(map.get("p_userName").toString());
             order.setCreateTime(new Date());
             saveFlag = orderService.save(order);
         } catch (Exception e) {
