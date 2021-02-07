@@ -8,4 +8,11 @@
             select * from customer;
         </select>
 
+        <select id="test2" parameterType="map" resultType="map">
+            SELECT c.id,c.`name`,o.order_address,o.deposit,o.remarks
+            FROM customer c LEFT JOIN order_table o
+            on c.id=o.customer_id
+            where c.id=#{p_cid}
+        </select>
+
 </mapper>

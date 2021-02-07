@@ -28,4 +28,6 @@ public interface CustomerMapper extends BaseMapper<Customer> {
 
     @Mapper
     public List<Customer> test();
+    @Mapper
+    public List<Map> test2(Map map);
 }

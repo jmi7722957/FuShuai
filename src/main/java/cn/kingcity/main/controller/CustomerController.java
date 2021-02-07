@@ -29,10 +29,21 @@ public class CustomerController {
     @Resource
     Customer customer;
 
-    @GetMapping("/test")
+    //普通xml查询
+    @GetMapping("/xml")
     public ResponseEntity test(){
         List<Customer> customer = mapper.test();
         ResponseEntity<List<Customer>> ok = ResponseEntity.ok(customer);
+        return ok;
+    }
+
+    //带参联表查询
+    @GetMapping("/xml2")
+    public ResponseEntity test2(){
+        Map map=new HashMap();
+        map.put("p_cid",1);
+        List<Map> customer = mapper.test2(map);
+        ResponseEntity<List<Map>> ok = ResponseEntity.ok(customer);
         return ok;
     }
 
