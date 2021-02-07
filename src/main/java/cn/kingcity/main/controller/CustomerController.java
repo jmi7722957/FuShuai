@@ -5,12 +5,10 @@ import cn.kingcity.main.entity.Customer;
 import cn.kingcity.main.mapper.CustomerMapper;
 import cn.kingcity.main.service.ICustomerService;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.math.BigInteger;
 import java.util.*;
 
 /**
@@ -32,9 +30,10 @@ public class CustomerController {
     Customer customer;
 
     @GetMapping("/test")
-    public String test(){
-        System.out.println("去虐企斩蔗");
-        return "11思密达";
+    public ResponseEntity test(){
+        List<Customer> customer = mapper.test();
+        ResponseEntity<List<Customer>> ok = ResponseEntity.ok(customer);
+        return ok;
     }
 
     @GetMapping("/list")

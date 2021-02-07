@@ -2,6 +2,7 @@ package cn.kingcity.main.mapper;
 
 import cn.kingcity.main.entity.Customer;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,10 @@ import java.util.Map;
  */
 @Repository
 public interface CustomerMapper extends BaseMapper<Customer> {
+    @Mapper
     @Select("SELECT address,COUNT(*) as number from customer GROUP BY address")
     public List<Map> addressCharts();
+
+    @Mapper
+    public List<Customer> test();
 }

@@ -4,4 +4,8 @@
         <!--<select id="addressCharts" resultType="java.util.ArrayList">
                 SELECT address, COUNT(1) as number from customer GROUP BY address
         </select>-->
+        <select id="test" resultType="cn.kingcity.main.entity.Customer">
+            select * from customer;
+        </select>
+
 </mapper>
