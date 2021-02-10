@@ -53,7 +53,7 @@ public class PhotoController {
         }
         try {
             String path = "/www/vueDemo/static/baseData/image";
-            //String path = "D:\\workspace\\FuShuai_Vue\\static\\image\\";
+            //String path = "D:\\workspace\\FuShuai_Vue\\static\\baseData\\image\\";
 
         //先来验证下文件是否存在
             File fileBean=new File(path+fileName);
