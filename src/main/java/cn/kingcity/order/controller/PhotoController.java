@@ -52,7 +52,7 @@ public class PhotoController {
             e.printStackTrace();
         }
         try {
-            String path = "/www/vueDemo/static/image";
+            String path = "/www/vueDemo/static/baseData/image";
             //String path = "D:\\workspace\\FuShuai_Vue\\static\\image\\";
 
         //先来验证下文件是否存在
