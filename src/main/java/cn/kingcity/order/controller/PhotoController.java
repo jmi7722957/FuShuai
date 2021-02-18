@@ -93,8 +93,9 @@ public class PhotoController {
                     os.close();
                     inputStream.close();
                 }
-                //下面开始把图片标记到数据库
 
+
+        //下面开始把图片标记到数据库
                 if(orderId!=null&&!isExist){
                     intOrderId=Integer.parseInt(orderId);
                     photo.setOrderId(intOrderId);
@@ -153,4 +154,5 @@ public class PhotoController {
         }
         return delFlag;
     }
+
 }

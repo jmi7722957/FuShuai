@@ -2,11 +2,14 @@ package cn.kingcity.order.controller;
 
 
 import cn.kingcity.order.entity.OrderTable;
+import cn.kingcity.order.mapper.PhotoMapper;
 import cn.kingcity.order.service.IOrderService;
+import cn.kingcity.order.service.IPhotoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +30,10 @@ public class OrderController {
     IOrderService orderService;
     @Resource
     OrderTable order;
+    @Resource
+    IPhotoService photoService;
+    @Resource
+    PhotoMapper photoMapper;
 
 
     @GetMapping("/list")
@@ -55,4 +62,27 @@ public class OrderController {
         }
         return saveFlag;
     }
+
+    @PostMapping("delete")
+    public List<Integer> delOrder(@RequestBody Map map){
+        List<Integer> resultList=new ArrayList<Integer>();
+        try {
+            List<Long> orderIdList=(List) map.get("p_del_list");
+
+            //检查订单照片是否已经删除照片
+            resultList=photoMapper.findAllDel(orderIdList);
+            if (resultList.size()==0) {
+                //从数据库删除
+                System.out.println("111");
+                orderService.removeByIds(orderIdList);
+            }else {
+                return resultList;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return resultList;
+        }
+        return resultList;
+    }
+
 }

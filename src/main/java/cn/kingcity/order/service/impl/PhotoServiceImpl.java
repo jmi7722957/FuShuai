@@ -6,6 +6,10 @@ import cn.kingcity.order.service.IPhotoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.io.File;
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -16,5 +20,4 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PhotoServiceImpl extends ServiceImpl<PhotoMapper, Photo> implements IPhotoService {
-
 }
